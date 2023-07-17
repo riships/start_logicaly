@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Chat bot logic
+            function chatBot() {
+                // Welcome message
+                console.log("Chat Bot: Hi, how can I assist you today?");
+
+                while (true) {
+                    // Get user input
+                    const userInput = prompt("You: ");
+
+                    // Check if user canceled the prompt
+                    if (userInput === null) {
+                        console.log("Chat Bot: Goodbye! Have a nice day.");
+                        break;
+                    }
+
+                    // Process user input and provide responses
+                    if (userInput.toLowerCase().includes("hello")) {
+                        console.log("Chat Bot: Hello there!");
+                    } else if (userInput.toLowerCase().includes("how are you")) {
+                        console.log("Chat Bot: I'm a bot, so I don't have feelings, but thanks for asking!");
+                    } else if (userInput.toLowerCase().includes("bye")) {
+                        console.log("Chat Bot: Goodbye! Have a nice day.");
+                        break;
+                    } else {
+                        console.log("Chat Bot: I'm sorry, I didn't understand. Can you please rephrase that?");
+                    }
+                }
+            }
+
+            // Start the chat bot
+            chatBot();
+        });
+
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

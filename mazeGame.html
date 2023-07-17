@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Game</title>
+    <style>
+        .maze {
+            display: grid;
+            grid-template-columns: repeat(10, 40px);
+            grid-template-rows: repeat(10, 40px);
+            gap: 1px;
+            background-color: #eee;
+            margin: 20px auto;
+        }
+
+        .maze .cell {
+            background-color: #fff;
+        }
+
+        .maze .player {
+            background-color: #ff0000;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let maze = [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+                [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+                [1, 0, 1, 0, 2, 1, 0, 1, 0, 1],
+                [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+                [1, 0, 0, 0, 1, 1, 0, 1, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ];
+
+            let mazeContainer = document.querySelector('.maze');
+
+            // Create the maze grid
+            for (let row = 0; row < maze.length; row++) {
+                for (let col = 0; col < maze[row].length; col++) {
+                    let cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+
+                    if (maze[row][col] === 1) {
+                        cell.classList.add('wall');
+                    }
+
+                    mazeContainer.appendChild(cell);
+                }
+            }
+
+            let player = {
+                row: 1,
+                col: 1
+            };
+
+            let playerCell = document.querySelector(`[data-row="${player.row}"][data-col="${player.col}"]`);
+            playerCell. .add('player');
+
+            document.addEventListener('keydown', function (event) {
+                let { key } = event;
+                let newRow = player.row;
+                let newCol = player.col;
+
+                if (key === 'ArrowUp') {
+                    newRow--;
+                    console.log(newRow, "up");
+                } else if (key === 'ArrowDown') {
+                    newRow++;
+                    console.log(newRow, "down");
+                } else if (key === 'ArrowLeft') {
+                    newCol--;
+                    console.log(newCol, "left");
+
+                } else if (key === 'ArrowRight') {
+                    newCol++;
+                    console.log(newCol, "right");
+
+                }
+
+                let newCell = document.querySelector(`[data-row="${newRow}"][data-col="${newCol}"]`);
+
+                if (newCell && !newCell.classList.contains('wall')) {
+                    playerCell.classList.remove('player');
+                    newCell.classList.add('player');
+                    player.row = newRow;
+                    player.col = newCol;
+                    playerCell = newCell;
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="maze"></div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Repeat</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Your JavaScript code here
+            // Get a reference to the container element
+            const container = document.getElementById("container");
+
+            // Data to be repeated
+            const dataOfCars = [
+                { name: "volvo", price: 50 },
+                { name: "jeep", price: 60 },
+                { name: "thar", price: 70 },
+                { name: "suzuki", price: "65" },
+                { name: "audi", price: "6  85" },
+            ];
+
+            // Loop through the data array and generate HTML for each item
+
+            dataOfCars.forEach(item => {
+                // Create a new div element
+                const tableRow = document.createElement("tr");
+
+
+                // Clean up price value and convert to number
+                const cleanedPrice = typeof item.price === 'string' ? parseFloat(item.price.replace(/\s/g, "")) : item.price;
+
+                // Set the content of the div
+                tableRow.innerHTML = `<td>Name: ${item.name}</td><td>Age: ${cleanedPrice}</td>`;
+
+
+                // Append the div to the container
+                container.appendChild(tableRow);
+            });
+        });
+
+
+
+    </script>
+
+</head>
+
+<body>
+    <table id="container" border="1" style="border-collapse: collapse;">
+        <!-- This table will hold our repeating elements -->
+    </table>
+
+</body>
+
+</html>
