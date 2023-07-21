@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            font: 12pt "Tahoma";
+        }
+
         .new-text-style {
             margin: 10px auto;
             display: block;
@@ -21,7 +25,6 @@
 
         }
     </style>
-
 </head>
 
 <body>
@@ -90,6 +93,7 @@
 
                 console.log('Data stored successfully!');
             }
+            location.reload(true)
 
             // Call the loadData function to display existing data after storing new data
         }
@@ -117,15 +121,12 @@
 
             });
         }
-
-
-
         btnElab.addEventListener('click', storeData);
 
         // Call the loadData function to display existing data on page load
+
+
         loadData();
-
-
 
 
 
