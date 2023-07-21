@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .new-input-style {
+        .new-text-style {
             margin: 10px auto;
             display: block;
         }
@@ -26,6 +26,7 @@
 
 <body>
     <script>
+
         // Create a new element
         const newElement = document.createElement('div');
         const newPara = document.createElement('input');
@@ -40,25 +41,13 @@
         newPara.type = 'text';
         newPara.name = 'text';
         newPara.placeholder = "Please Enter The Name"
-        newPara.type = 'text';
-        newPara.name = 'text';
-        newPara.placeholder = "Please Enter The Name"
+        newPara2.type = 'date';
+        newPara2.name = 'date';
+        newPara2.placeholder = "Please Enter The time"
         newPara2.textContent = 'This is a newly created paragraph element for the text enter!';
         btnElab.textContent = "Button"
         btnElab.type = "submit"
         btnElab.name = "submit"
-
-        // we will use condition based on click funtion
-        function showParagraph() {
-            if (newPara2.style.display === "block") {
-                newPara2.style.display = "none"
-            }
-            else {
-                newPara2.style.display = "block"
-            };
-
-        }
-        btnElab.onclick = showParagraph;
 
 
         // Append the new element to the body of the document
@@ -67,15 +56,79 @@
         newElement.appendChild(newPara2)
         newElement.appendChild(btnElab)
 
-        // add class
-
-
         // add style here
         let newStyleOfPara = newElement.querySelectorAll("input");
 
         newStyleOfPara.forEach(paraGraph => {
-            paraGraph.setAttribute('class', 'new-input-style');
+            paraGraph.setAttribute('class', 'new-text-style');
         });
+        function storeData() {
+            const dataOfDate = document.getElementsByName('date')[0].value;
+            const dataOfText = document.getElementsByName('text')[0].value;
+
+            // Check if the input fields are empty
+            if (dataOfDate.trim() === '' || dataOfText.trim() === '') {
+                console.log('Both input fields must be filled to store data.');
+                return;
+                // Exit the function early if inputs are empty
+            }
+            // Check if there is existing data in local storage
+
+
+            let existingData = JSON.parse(localStorage.getItem('allData')) || [];
+            const isDuplicate = existingData.some(data => data.date === dataOfDate && data.text === dataOfText);
+
+
+            if (isDuplicate) {
+                console.log('Data already exists in local storage. Skipping storage.');
+            } else {
+                // Add the new data to the existing data
+                existingData.push({ date: dataOfDate, text: dataOfText });
+
+                // Save the updated data to local storage
+                localStorage.setItem('allData', JSON.stringify(existingData));
+
+                console.log('Data stored successfully!');
+            }
+
+            // Call the loadData function to display existing data after storing new data
+        }
+
+        // Function to load data from local storage
+        function loadData() {
+            let allData = JSON.parse(localStorage.getItem('allData')) || [];
+
+            // Display the data on the page
+            allData.forEach(data => {
+                // we will display the data here
+                const dataElem = document.createElement('div');
+                const displayText = document.createElement('p');
+                const displayText2 = document.createElement('p');
+
+
+
+                dataElem.appendChild(displayText)
+
+                displayText.textContent = data.text;
+                displayText2.textContent = data.date;
+                document.body.appendChild(dataElem);
+                dataElem.appendChild(displayText);
+                dataElem.appendChild(displayText2);
+
+            });
+        }
+
+
+
+        btnElab.addEventListener('click', storeData);
+
+        // Call the loadData function to display existing data on page load
+        loadData();
+
+
+
+
+
 
 
     </script>
