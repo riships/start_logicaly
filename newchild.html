@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .new-input-style {
+            margin: 10px auto;
+            display: block;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <script>
+        // Create a new element
+        const newElement = document.createElement('div');
+        const newPara = document.createElement('input');
+        const newPara2 = document.createElement('input');
+        const btnElab = document.createElement('button');
+
+        // Set attributes (if needed)
+        newElement.setAttribute('id', 'new-paragraph');
+        newElement.setAttribute('class', 'paragraph-style');
+
+        // Set content
+        newPara.type = 'text';
+        newPara.name = 'text';
+        newPara.placeholder = "Please Enter The Name"
+        newPara.type = 'text';
+        newPara.name = 'text';
+        newPara.placeholder = "Please Enter The Name"
+        newPara2.textContent = 'This is a newly created paragraph element for the text enter!';
+        btnElab.textContent = "Button"
+        btnElab.type = "submit"
+        btnElab.name = "submit"
+
+        // we will use condition based on click funtion
+        function showParagraph() {
+            if (newPara2.style.display === "block") {
+                newPara2.style.display = "none"
+            }
+            else {
+                newPara2.style.display = "block"
+            };
+
+        }
+        btnElab.onclick = showParagraph;
+
+
+        // Append the new element to the body of the document
+        document.body.appendChild(newElement);
+        newElement.appendChild(newPara)
+        newElement.appendChild(newPara2)
+        newElement.appendChild(btnElab)
+
+        // add class
+
+
+        // add style here
+        let newStyleOfPara = newElement.querySelectorAll("input");
+
+        newStyleOfPara.forEach(paraGraph => {
+            paraGraph.setAttribute('class', 'new-input-style');
+        });
+
+
+    </script>
+</body>
+
+</html>
