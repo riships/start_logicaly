@@ -42,7 +42,9 @@
 
             // Create the maze grid
             for (let row = 0; row < maze.length; row++) {
+                console.log(maze.length);
                 for (let col = 0; col < maze[row].length; col++) {
+                    console.log(maze[row]);
                     let cell = document.createElement('div');
                     cell.classList.add('cell');
                     cell.dataset.row = row;
@@ -62,7 +64,7 @@
             };
 
             let playerCell = document.querySelector(`[data-row="${player.row}"][data-col="${player.col}"]`);
-            playerCell.add('player');
+            // playerCell.add('player');
 
             document.addEventListener('keydown', function (event) {
                 let { key } = event;
