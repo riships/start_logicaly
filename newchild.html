@@ -60,8 +60,7 @@
         row.setAttribute('class', 'row mb-3');
         col.setAttribute('class', 'col-auto');
         newElement.setAttribute('class', 'container contener-style-new');
-        textForEmpty.setAttribute('class', 'alert alert-danger');
-        textForEmpty.setAttribute('role', 'alert');
+
         // newPara.setAttribute('class', 'form-control-plaintext');
 
 
@@ -98,6 +97,8 @@
 
             // Check if the input fields are empty
             if (dataOfDate.trim() === '' || dataOfText.trim() === '') {
+                textForEmpty.setAttribute('class', 'alert alert-danger');
+                textForEmpty.setAttribute('role', 'alert');
                 textForEmpty.textContent = 'Both input fields must be filled to store data.';
                 newElement.appendChild(textForEmpty);
                 return;
@@ -118,12 +119,22 @@
 
                 // Save the updated data to local storage
                 localStorage.setItem('allData', JSON.stringify(existingData));
+                textForEmpty.setAttribute('class', 'alert alert-success');
+                textForEmpty.setAttribute('role', 'alert');
+                textForEmpty.textContent = ('Data stored successfully!');
+                newElement.appendChild(textForEmpty);
 
-                alert('Data stored successfully!');
             }
             location.reload(true)
 
             // Call the loadData function to display existing data after storing new data
+        }
+
+        function deleteData(index) {
+            let allData = JSON.parse(localStorage.getItem('allData')) || [];
+            allData.splice(index, 1);
+            localStorage.setItem('allData', JSON.stringify(allData));
+            location.reload(true)
         }
 
         // Function to load data from local storage
@@ -131,26 +142,34 @@
             let allData = JSON.parse(localStorage.getItem('allData')) || [];
 
             // Display the data on the page
-            allData.forEach(data => {
+            allData.forEach((data, index) => {
                 // we will display the data here
                 const dataElem = document.createElement('div');
                 const displayText = document.createElement('p');
                 const displayText2 = document.createElement('p');
+                const dltBtn = document.createElement('button')
 
-
+                // setAttribute here
                 dataElem.setAttribute('class', 'div-slected')
+                dltBtn.setAttribute('class', 'btn btn-danger');
+                dltBtn.innerHTML = "Delete";
+                dltBtn.addEventListener('click', () => deleteData(index));
+
                 dataElem.appendChild(displayText)
                 displayText.textContent = data.text;
                 displayText2.textContent = data.date;
                 document.body.appendChild(dataElem);
                 dataElem.appendChild(displayText);
                 dataElem.appendChild(displayText2);
-
+                dataElem.appendChild(dltBtn);
             });
+
         }
         btnElab.addEventListener('click', storeData);
+
         // Call the loadData function to display existing data on page load
         loadData();
+
 
     </script>
 </body>
