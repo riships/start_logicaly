@@ -4,10 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
     <title>Document</title>
     <style>
         body {
             font: 12pt "Tahoma";
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         .new-text-style {
@@ -15,14 +23,22 @@
             display: block;
         }
 
-        div {
+        .div-slected {
             display: flex;
             flex-direction: column;
             width: 100%;
             justify-content: center;
             text-align: center;
             align-items: center;
+        }
 
+        .contener-style-new {
+            display: flex;
+            flex-direction: column;
+            /* width: 100%; */
+            justify-content: center;
+            text-align: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -32,13 +48,22 @@
 
         // Create a new element
         const newElement = document.createElement('div');
+        const row = document.createElement('div');
+        const col = document.createElement('div');
         const newPara = document.createElement('input');
         const newPara2 = document.createElement('input');
         const btnElab = document.createElement('button');
+        const textForEmpty = document.createElement('p');
 
         // Set attributes (if needed)
-        newElement.setAttribute('id', 'new-paragraph');
-        newElement.setAttribute('class', 'paragraph-style');
+        newElement.setAttribute('id', 'new-section');
+        row.setAttribute('class', 'row mb-3');
+        col.setAttribute('class', 'col-auto');
+        newElement.setAttribute('class', 'container contener-style-new');
+        textForEmpty.setAttribute('class', 'alert alert-danger');
+        textForEmpty.setAttribute('role', 'alert');
+        // newPara.setAttribute('class', 'form-control-plaintext');
+
 
         // Set content
         newPara.type = 'text';
@@ -47,7 +72,7 @@
         newPara2.type = 'date';
         newPara2.name = 'date';
         newPara2.placeholder = "Please Enter The time"
-        newPara2.textContent = 'This is a newly created paragraph element for the text enter!';
+        // newPara2.textContent = 'This is a newly created paragraph element for the text enter!';
         btnElab.textContent = "Button"
         btnElab.type = "submit"
         btnElab.name = "submit"
@@ -55,15 +80,17 @@
 
         // Append the new element to the body of the document
         document.body.appendChild(newElement);
-        newElement.appendChild(newPara)
-        newElement.appendChild(newPara2)
-        newElement.appendChild(btnElab)
+        newElement.appendChild(row)
+        row.appendChild(col)
+        col.appendChild(newPara);
+        col.appendChild(newPara2)
+        col.appendChild(btnElab)
 
         // add style here
         let newStyleOfPara = newElement.querySelectorAll("input");
 
         newStyleOfPara.forEach(paraGraph => {
-            paraGraph.setAttribute('class', 'new-text-style');
+            paraGraph.setAttribute('class', 'new-text-style form-control');
         });
         function storeData() {
             const dataOfDate = document.getElementsByName('date')[0].value;
@@ -71,7 +98,8 @@
 
             // Check if the input fields are empty
             if (dataOfDate.trim() === '' || dataOfText.trim() === '') {
-                console.log('Both input fields must be filled to store data.');
+                textForEmpty.textContent = 'Both input fields must be filled to store data.';
+                newElement.appendChild(textForEmpty);
                 return;
                 // Exit the function early if inputs are empty
             }
@@ -83,7 +111,7 @@
 
 
             if (isDuplicate) {
-                console.log('Data already exists in local storage. Skipping storage.');
+                alert('Data already exists in local storage. Skipping storage.');
             } else {
                 // Add the new data to the existing data
                 existingData.push({ date: dataOfDate, text: dataOfText });
@@ -91,7 +119,7 @@
                 // Save the updated data to local storage
                 localStorage.setItem('allData', JSON.stringify(existingData));
 
-                console.log('Data stored successfully!');
+                alert('Data stored successfully!');
             }
             location.reload(true)
 
@@ -110,9 +138,8 @@
                 const displayText2 = document.createElement('p');
 
 
-
+                dataElem.setAttribute('class', 'div-slected')
                 dataElem.appendChild(displayText)
-
                 displayText.textContent = data.text;
                 displayText2.textContent = data.date;
                 document.body.appendChild(dataElem);
@@ -122,11 +149,9 @@
             });
         }
         btnElab.addEventListener('click', storeData);
-
         // Call the loadData function to display existing data on page load
-
-
         loadData();
+
     </script>
 </body>
 
