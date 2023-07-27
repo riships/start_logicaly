@@ -11,11 +11,16 @@
         crossorigin="anonymous"></script>
     <title>Document</title>
     <style>
+        /* Add your CSS styles here */
         body {
             font: 12pt "Tahoma";
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        p {
+            margin: 0;
         }
 
         .new-text-style {
@@ -25,152 +30,161 @@
 
         .div-slected {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             width: 100%;
             justify-content: center;
             text-align: center;
             align-items: center;
+            gap: 20px;
         }
 
         .contener-style-new {
-            display: flex;
-            flex-direction: column;
             /* width: 100%; */
             justify-content: center;
             text-align: center;
             align-items: center;
         }
+
+        .btn-style {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+
+        }
     </style>
 </head>
 
 <body>
+    <!-- Input fields and Button container -->
+    <div class="container">
+        <div class="row mb-3 contener-style-new">
+            <div class="col-3">
+                <!-- Container to display the stored data -->
+                <div class="container" id="dataContainer">
+                </div>
+            </div>
+            <div class="col-3" id="autoCol">
+                <!-- Input fields -->
+                <input class="new-text-style form-control" type="text" name="text" placeholder="Please Enter The Name">
+                <input class="new-text-style form-control" type="date" name="date" placeholder="Please Enter The time">
+                <!-- Button to store data -->
+                <button id="btnElab" class="btn btn-primary" type="button">Button</button>
+                <!-- Button to save changes during edit mode -->
+                <button id="btnSave" class="btn btn-success" type="button" style="display: none;">Save</button>
+                <!-- Button to cancel edit mode -->
+                <button id="btnCancel" class="btn btn-secondary" type="button" style="display: none;">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+
+
     <script>
+        // Array to store the data
+        let allData = [];
 
-        // Create a new element
-        const newElement = document.createElement('div');
-        const row = document.createElement('div');
-        const col = document.createElement('div');
-        const newPara = document.createElement('input');
-        const newPara2 = document.createElement('input');
-        const btnElab = document.createElement('button');
-        const textForEmpty = document.createElement('p');
+        // Get references to the button and data container
+        const btnElab = document.getElementById('btnElab');
+        const btnSave = document.getElementById('btnSave');
+        const btnCancel = document.getElementById('btnCancel');
+        const dataContainer = document.getElementById('dataContainer');
+        const textInput = document.getElementsByName('text')[0];
+        const dateInput = document.getElementsByName('date')[0];
+        const paraAlert = document.createElement('p');
+        const colAuto = document.getElementById('autoCol');
+        let editIndex = -1;
 
-        // Set attributes (if needed)
-        newElement.setAttribute('id', 'new-section');
-        row.setAttribute('class', 'row mb-3');
-        col.setAttribute('class', 'col-auto');
-        newElement.setAttribute('class', 'container contener-style-new');
+        // Function to store data in the array
+        const storeData = () => {
+            const dataOfDate = dateInput.value;
+            const dataOfText = textInput.value;
 
-        // newPara.setAttribute('class', 'form-control-plaintext');
-
-
-        // Set content
-        newPara.type = 'text';
-        newPara.name = 'text';
-        newPara.placeholder = "Please Enter The Name"
-        newPara2.type = 'date';
-        newPara2.name = 'date';
-        newPara2.placeholder = "Please Enter The time"
-        // newPara2.textContent = 'This is a newly created paragraph element for the text enter!';
-        btnElab.textContent = "Button"
-        btnElab.type = "submit"
-        btnElab.name = "submit"
-
-
-        // Append the new element to the body of the document
-        document.body.appendChild(newElement);
-        newElement.appendChild(row)
-        row.appendChild(col)
-        col.appendChild(newPara);
-        col.appendChild(newPara2)
-        col.appendChild(btnElab)
-
-        // add style here
-        let newStyleOfPara = newElement.querySelectorAll("input");
-
-        newStyleOfPara.forEach(paraGraph => {
-            paraGraph.setAttribute('class', 'new-text-style form-control');
-        });
-        function storeData() {
-            const dataOfDate = document.getElementsByName('date')[0].value;
-            const dataOfText = document.getElementsByName('text')[0].value;
-
-            // Check if the input fields are empty
-            if (dataOfDate.trim() === '' || dataOfText.trim() === '') {
-                textForEmpty.setAttribute('class', 'alert alert-danger');
-                textForEmpty.setAttribute('role', 'alert');
-                textForEmpty.textContent = 'Both input fields must be filled to store data.';
-                newElement.appendChild(textForEmpty);
+            // Check if input fields are empty
+            if (dataOfDate === '' || dataOfText === '') {
+                paraAlert.setAttribute('class', 'alert alert-danger');
+                paraAlert.setAttribute('role', 'alert');
+                paraAlert.textContent = 'Both input fields must be filled to store data.'
                 return;
-                // Exit the function early if inputs are empty
             }
-            // Check if there is existing data in local storage
 
-
-            let existingData = JSON.parse(localStorage.getItem('allData')) || [];
-            const isDuplicate = existingData.some(data => data.date === dataOfDate && data.text === dataOfText);
-
-
+            // Check if the data already exists in the array
+            const isDuplicate = allData.some(data => data.date === dataOfDate && data.text === dataOfText);
             if (isDuplicate) {
-                alert('Data already exists in local storage. Skipping storage.');
+                paraAlert.setAttribute('class', 'alert alert-warning');
+                paraAlert.setAttribute('role', 'alert');
+                paraAlert.textContent = 'Data already exists. Skipping storage.';
             } else {
-                // Add the new data to the existing data
-                existingData.push({ date: dataOfDate, text: dataOfText });
-
-                // Save the updated data to local storage
-                localStorage.setItem('allData', JSON.stringify(existingData));
-                textForEmpty.setAttribute('class', 'alert alert-success');
-                textForEmpty.setAttribute('role', 'alert');
-                textForEmpty.textContent = ('Data stored successfully!');
-                newElement.appendChild(textForEmpty);
-
+                // Check if we are in edit mode
+                if (editIndex !== -1) {
+                    // Update the existing data
+                    allData[editIndex] = { date: dataOfDate, text: dataOfText };
+                    cancelEditMode();
+                } else {
+                    // Add the new data to the array
+                    allData.push({ date: dataOfDate, text: dataOfText });
+                }
+                // Display the updated data
+                displayData();
+                // Clear the input fields
+                textInput.value = '';
+                dateInput.value = '';
             }
-            location.reload(true)
+        };
 
-            // Call the loadData function to display existing data after storing new data
-        }
-
-        function deleteData(index) {
-            let allData = JSON.parse(localStorage.getItem('allData')) || [];
+        // Function to delete data from the array
+        const deleteData = index => {
             allData.splice(index, 1);
-            localStorage.setItem('allData', JSON.stringify(allData));
-            location.reload(true)
-        }
+            // If we are in edit mode and deleting the current data, cancel edit mode
+            if (editIndex === index) {
+                cancelEditMode();
+            }
+            // Display the updated data
+            displayData();
+        };
 
-        // Function to load data from local storage
-        function loadData() {
-            let allData = JSON.parse(localStorage.getItem('allData')) || [];
+        // Function to enter edit mode for data modification
+        const enterEditMode = index => {
+            editIndex = index;
+            textInput.value = allData[index].text;
+            dateInput.value = allData[index].date;
+            btnElab.style.display = 'none';
+            btnSave.style.display = 'inline';
+            btnCancel.style.display = 'inline';
+        };
 
-            // Display the data on the page
-            allData.forEach((data, index) => {
-                // we will display the data here
-                const dataElem = document.createElement('div');
-                const displayText = document.createElement('p');
-                const displayText2 = document.createElement('p');
-                const dltBtn = document.createElement('button')
+        // Function to cancel edit mode without saving changes
+        const cancelEditMode = () => {
+            editIndex = -1;
+            textInput.value = '';
+            dateInput.value = '';
+            btnElab.style.display = 'inline';
+            btnSave.style.display = 'none';
+            btnCancel.style.display = 'none';
+        };
 
-                // setAttribute here
-                dataElem.setAttribute('class', 'div-slected')
-                dltBtn.setAttribute('class', 'btn btn-danger');
-                dltBtn.innerHTML = "Delete";
-                dltBtn.addEventListener('click', () => deleteData(index));
+        // Function to display the stored data on the page
+        const displayData = () => {
+            dataContainer.innerHTML = allData.map((data, index) => `
+                <div class="div-slected">
+                    <p>${data.text}</p>
+                    <p>${data.date}</p>
+                    <div class="btn-style">
+                    <button class="btn btn-primary" onclick="enterEditMode(${index})">Edit</button>
+                    <button class="btn btn-danger" onclick="deleteData(${index})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        };
 
-                dataElem.appendChild(displayText)
-                displayText.textContent = data.text;
-                displayText2.textContent = data.date;
-                document.body.appendChild(dataElem);
-                dataElem.appendChild(displayText);
-                dataElem.appendChild(displayText2);
-                dataElem.appendChild(dltBtn);
-            });
-
-        }
+        // Add event listeners
         btnElab.addEventListener('click', storeData);
+        btnSave.addEventListener('click', storeData);
+        btnCancel.addEventListener('click', cancelEditMode);
 
-        // Call the loadData function to display existing data on page load
-        loadData();
-
-
+        // Display any existing stored data on page load
+        colAuto.appendChild(paraAlert);
+        displayData();
     </script>
 </body>
 
