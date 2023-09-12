@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(
+            function () {
+                $(".testing").hide();
+                $("button").click(function () {
+                    if ($(".testing").length > 0) {
+                        $(".testing").show();
+                    }
+                    console.log($(".testing").length);
+                });
+                $("#p1").mouseenter(function () {
+                    $("#alertText").text("You entered p1!");
+                });
+                $("#p1").mouseleave(function () {
+                    $("#alertText").text("Bye! You now leave p1!");
+                });
+                $("#p1").mousedown(function () {
+                    $("#alertText2").text("Mouse down over p1!");
+                });
+                $("#p1").mouseup(function () {
+                    $("#alertText2").text("Mouse up over p1!");
+                });
+            }
+        );
+
+    </script>
+</head>
+
+<body>
+
+    <h2 class="testing">This is a heading</h2>
+
+    <p>This is a paragraph.</p>
+    <p>This is another paragraph.</p>
+    <p id='p1'>Hover over this para to see the mouse enter event!</p>
+    <p id="alertText"></p>
+    <p id="alertText2"></p>
+    <button>Click me</button>
+
+</body>
+
+</html>
