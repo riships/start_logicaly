@@ -17,11 +17,12 @@
             height: 100vh;
         }
 
-        form {
+        #form-styl {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
         }
 
         label {
@@ -69,18 +70,31 @@
             constructor(givenname, ageNum) {
                 this.fill(givenname, ageNum);
             }
+            resetForm() {
+                // Reset form fields
+                document.getElementById('givenname').value = '';
+                document.getElementById('age').value = '';
+            }
 
             submit() {
                 // You can modify this part to send data to a server or perform other actions
                 const messageContainer = document.getElementById('disItem');
                 messageContainer.textContent = 'Hello ' + this.name + ', your form has been submitted. We will contact you as soon as possible.';
                 messageContainer.style.display = 'block';
+                // Add the 'form-submitted' class to the form-styl div
+                const formStyl = document.getElementById('frm');
+                formStyl.style.display = 'none';
             }
 
             cancel() {
                 const messageContainer = document.getElementById('disItem');
                 messageContainer.textContent = this.name + ', your form has been canceled.';
                 messageContainer.style.display = 'block';
+                // Add the 'form-submitted' class to the form
+                const formStyl = document.getElementById('frm');
+                formStyl.style.display = 'block';
+                // Clear form data
+                this.resetForm();
             }
 
 
@@ -112,15 +126,19 @@
             window.formInstance.submit();
         }
         function cancelForm() {
+            const buttonCncl = document.getElementById('cnclBtn');
             let form = window.formInstance; // Reuse the existing form instance
             form.cancel();
+            buttonCncl.style.display = 'none';
+
         }
     </script>
 </head>
 
 <body>
     <div id="form-styl">
-        <form onsubmit="handleSubmit(); return false;">
+        <h2 style="text-align: center; text-decoration: underline;">Are you Adult.</h1>
+            <form id="frm" onsubmit="handleSubmit(); return false;">
             <label for="givenname">Name:</label>
             <input type="text" id="givenname" required>
 
@@ -128,8 +146,8 @@
             <input type="number" id="age" required>
 
             <button type="submit">Submit</button>
-            <div id="disItem"></div>
         </form>
+        <div id="disItem"></div>
         <button id="cnclBtn" onclick="cancelForm();">Cancel</button>
     </div>
 
