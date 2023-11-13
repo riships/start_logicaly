@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #disItem {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 4px;
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
+            display: none;
+        }
+
+        #cnclBtn {
+            display: none;
+            background-color: red;
+        }
+    </style>
+    <script>
+        class myNewAdmissionForm {
+            constructor(givenname, ageNum) {
+                this.fill(givenname, ageNum);
+            }
+
+            submit() {
+                // You can modify this part to send data to a server or perform other actions
+                const messageContainer = document.getElementById('disItem');
+                messageContainer.textContent = 'Hello ' + this.name + ', your form has been submitted. We will contact you as soon as possible.';
+                messageContainer.style.display = 'block';
+            }
+
+            cancel() {
+                const messageContainer = document.getElementById('disItem');
+                messageContainer.textContent = this.name + ', your form has been canceled.';
+                messageContainer.style.display = 'block';
+            }
+
+
+            fill(givenname, ageNum) {
+                this.name = givenname;
+                this.age = ageNum;
+            }
+        }
+
+        function handleSubmit() {
+            // Get values from the form
+            const givenname = document.getElementById('givenname').value;
+            const ageNum = parseInt(document.getElementById('age').value);
+            const buttonCncl = document.getElementById('cnclBtn');
+            // const disItem = document.getElementById('form-dis');
+
+
+
+            // Create an instance of the form and store it globally
+            window.formInstance = new myNewAdmissionForm(givenname, ageNum);
+
+            // Create an instance of the form
+            window.formInstance.fill(givenname, ageNum);
+
+            // Display the cancel button
+            buttonCncl.style.display = 'block';
+
+            // Submit the form
+            window.formInstance.submit();
+        }
+        function cancelForm() {
+            let form = window.formInstance; // Reuse the existing form instance
+            form.cancel();
+        }
+    </script>
+</head>
+
+<body>
+    <div id="form-styl">
+        <form onsubmit="handleSubmit(); return false;">
+            <label for="givenname">Name:</label>
+            <input type="text" id="givenname" required>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" required>
+
+            <button type="submit">Submit</button>
+            <div id="disItem"></div>
+        </form>
+        <button id="cnclBtn" onclick="cancelForm();">Cancel</button>
+    </div>
+
+</body>
+
+</html>
