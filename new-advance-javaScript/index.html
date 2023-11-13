@@ -77,13 +77,25 @@
             }
 
             submit() {
-                // You can modify this part to send data to a server or perform other actions
-                const messageContainer = document.getElementById('disItem');
-                messageContainer.textContent = 'Hello ' + this.name + ', your form has been submitted. We will contact you as soon as possible.';
-                messageContainer.style.display = 'block';
-                // Add the 'form-submitted' class to the form-styl div
-                const formStyl = document.getElementById('frm');
-                formStyl.style.display = 'none';
+                // Get the age value from the input field
+                const ageInput = document.getElementById('age');
+                const buttonCncl = document.getElementById('cnclBtn');
+                const age = parseInt(ageInput.value);
+                if (age >= 18) {
+                    // You can modify this part to send data to a server or perform other actions
+                    const messageContainer = document.getElementById('disItem');
+                    messageContainer.textContent = this.name + ', you are eligible for voting.';
+
+                    messageContainer.style.display = 'block';
+                    // Add the 'form-submitted' class to the form-styl div
+                    const formStyl = document.getElementById('frm');
+                    formStyl.style.display = 'none';
+                    // Display the cancel button
+                    buttonCncl.style.display = 'block';
+                }
+                else {
+                    alert(this.name + ', you are not eligible for voting.');
+                };
             }
 
             cancel() {
@@ -108,7 +120,6 @@
             // Get values from the form
             const givenname = document.getElementById('givenname').value;
             const ageNum = parseInt(document.getElementById('age').value);
-            const buttonCncl = document.getElementById('cnclBtn');
 
 
             // Create an instance of the form and store it globally
@@ -117,8 +128,7 @@
             // Create an instance of the form
             window.formInstance.fill(givenname, ageNum);
 
-            // Display the cancel button
-            buttonCncl.style.display = 'block';
+
 
             // Submit the form
             window.formInstance.submit();
@@ -137,16 +147,16 @@
     <div id="form-styl">
         <h2 style="text-align: center; text-decoration: underline;">Are you Adult.</h1>
             <form id="frm" onsubmit="handleSubmit(); return false;">
-            <label for="givenname">Name:</label>
-            <input type="text" id="givenname" required>
+                <label for="givenname">Name:</label>
+                <input type="text" id="givenname" required>
 
-            <label for="age">Age:</label>
-            <input type="number" id="age" required>
+                <label for="age">Age:</label>
+                <input type="number" id="age" required>
 
-            <button type="submit">Submit</button>
-        </form>
-        <div id="disItem"></div>
-        <button id="cnclBtn" onclick="cancelForm();">Cancel</button>
+                <button type="submit">Submit</button>
+                </form>
+                <div id="disItem"></div>
+                <button id="cnclBtn" onclick="cancelForm();">Cancel</button>
     </div>
 
 </body>
