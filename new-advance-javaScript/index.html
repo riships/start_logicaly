@@ -158,7 +158,17 @@
             form.cancel();
             buttonCncl.style.display = 'none';
 
+
+            // for reseting the form and deleting the printed content 
+            const resetTimer = setTimeout(() => {
+                const messageContainer = document.getElementById('disItem');
+                resetContent(messageContainer);
+            }, 4000);
         }
+        function resetContent(e) {
+            e.style.display = 'none';
+        }
+
     </script>
 
 </body>
