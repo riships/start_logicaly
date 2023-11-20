@@ -65,6 +65,24 @@
             background-color: red;
         }
     </style>
+
+</head>
+
+<body>
+    <div id="form-styl">
+        <h2 style="text-align: center; text-decoration: underline;">Are you Adult.</h1>
+            <form id="frm" onsubmit="handleSubmit(); return false;">
+                <label for="givenname">Name:</label>
+                <input type="text" id="givenname" required>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" required>
+
+                <button type="submit">Submit</button>
+            </form>
+            <div id="disItem"></div>
+            <button id="cnclBtn" onclick="cancelForm();">Cancel</button>
+    </div>
     <script>
         class myNewAdmissionForm {
             constructor(givenname, ageNum) {
@@ -140,25 +158,18 @@
             form.cancel();
             buttonCncl.style.display = 'none';
 
+
+            // for reseting the form and deleting the printed content 
+            const resetTimer = setTimeout(() => {
+                const messageContainer = document.getElementById('disItem');
+                resetContent(messageContainer);
+            }, 4000);
         }
+        function resetContent(e) {
+            e.style.display = 'none';
+        }
+
     </script>
-</head>
-
-<body>
-    <div id="form-styl">
-        <h2 style="text-align: center; text-decoration: underline;">Are you Adult.</h1>
-            <form id="frm" onsubmit="handleSubmit(); return false;">
-                <label for="givenname">Name:</label>
-                <input type="text" id="givenname" required>
-
-                <label for="age">Age:</label>
-                <input type="number" id="age" required>
-
-                <button type="submit">Submit</button>
-                </form>
-                <div id="disItem"></div>
-                <button id="cnclBtn" onclick="cancelForm();">Cancel</button>
-    </div>
 
 </body>
 
