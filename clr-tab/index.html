@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color-Tab</title>
+    <style>
+        .color-dv {
+            height: 200px;
+            width: 200px;
+        }
+
+        main {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul li {
+            display: inline-block;
+        }
+
+        .green-tab {
+            background-color: green;
+        }
+
+        .red-tab {
+            background-color: red;
+        }
+
+        .blue-tab {
+            background-color: blue;
+        }
+
+        .yellow-tab {
+            background-color: yellow;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="tab">
+        <ul>
+            <li><button type="button">Red</button></li>
+            <li><button type="button">Green</button></li>
+            <li><button type="button">Blue</button></li>
+            <li><button type="button">Yellow</button></li>
+            <li><button type="button">All</button></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="color-dv yellow-tab"></div>
+        <div class="color-dv red-tab"></div>
+        <div class="color-dv green-tab"></div>
+        <div class="color-dv red-tab"></div>
+        <div class="color-dv blue-tab"></div>
+        <div class="color-dv red-tab"></div>
+        <div class="color-dv yellow-tab"></div>
+        <div class="color-dv green-tab"></div>
+        <div class="color-dv blue-tab"></div>
+        <div class="color-dv green-tab"></div>
+        <div class="color-dv blue-tab"></div>
+        <div class="color-dv yellow-tab"></div>
+    </main>
+    <script>
+        var allDiv = document.querySelectorAll(".color-dv");
+        var btns = document.getElementsByTagName('button');
+        var rdBtn = document.querySelectorAll('.red-tab');
+        var greenBtn = document.querySelectorAll('.green-tab');
+        var blueBtn = document.querySelectorAll('.blue-tab');
+        var yellowBtn = document.querySelectorAll('.yellow-tab');
+
+        // console.log("Number of buttons: " + btns.length);
+
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', function () {
+                var valueBtn = this.textContent.toLowerCase();
+                // Hide all color tabs
+                allDiv.forEach(function (div) {
+                    div.classList.add('hidden');
+                });
+
+                // Show specific color tabs based on the clicked button
+                switch (valueBtn) {
+                    case 'red':
+                        rdBtn.forEach(function (div) {
+                            div.classList.remove('hidden');
+                        });
+                        break;
+                    case 'green':
+                        greenBtn.forEach(function (div) {
+                            div.classList.remove('hidden');
+                        });
+                        break;
+                    case 'blue':
+                        blueBtn.forEach(function (div) {
+                            div.classList.remove('hidden');
+                        });
+                        break;
+                    case 'yellow':
+                        yellowBtn.forEach(function (div) {
+                            div.classList.remove('hidden');
+                        });
+                        break;
+                    case 'all':
+                        // Show all color tabs
+                        allDiv.forEach(function (div) {
+                            div.classList.remove('hidden');
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
