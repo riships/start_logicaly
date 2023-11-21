@@ -1,11 +1,7 @@
-// Check if a command-line argument is provided
-if (process.argv.length <= 2) {
-    console.log("Please provide a number as a command-line argument.");
-    process.exit(1);
-}
+const prompt = require('prompt-sync')();
 
-// Get the number from the command-line argument
-const num = parseInt(process.argv[2]);
+// Get the number from the user
+const num = parseInt(prompt('Enter a number: '));
 
 var isPrime = true;
 
