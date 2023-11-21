@@ -21,7 +21,7 @@
             padding: 10px;
             min-height: 30px;
             min-width: 120px;
-            box-shadow: 0px 0px 2px 2px rgb(0,0,0);
+            box-shadow: 0px 0px 2px 2px rgb(0, 0, 0);
         }
 
 
@@ -69,6 +69,7 @@
             <li><button type="button">Yellow</button></li>
         </ul>
     </nav>
+
     <main>
         <div class="color-dv yellow-tab"></div>
         <div class="color-dv red-tab"></div>
@@ -83,6 +84,7 @@
         <div class="color-dv blue-tab"></div>
         <div class="color-dv yellow-tab"></div>
     </main>
+
     <script>
         var allDiv = document.querySelectorAll(".color-dv");
         var btns = document.getElementsByTagName('button');
@@ -91,6 +93,7 @@
         var blueBtn = document.querySelectorAll('.blue-tab');
         var yellowBtn = document.querySelectorAll('.yellow-tab');
 
+
         for (var i = 0; i < btns.length; i++) {
             btns[i].addEventListener('click', function () {
                 var valueBtn = this.textContent.toLowerCase();
@@ -98,6 +101,7 @@
                 allDiv.forEach(function (div) {
                     div.classList.add('hidden');
                 });
+
 
                 // Show specific color tabs based on the clicked button
                 switch (valueBtn) {
