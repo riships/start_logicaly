@@ -7,3 +7,6 @@ console.log("1" + 2 + 3);
 
 // first two will be added and the rest will be coverted as number
 console.log(1 + 2 + "3" + 3); 
+
+
+
