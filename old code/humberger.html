@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .menu-icon {
+            display: none
+        }
+
+        .nav-fixed {
+
+            top: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+            margin: 0;
+            z-index: 1000;
+            max-width: 100%;
+            background-color: #ffffff;
+            /*border-bottom: 2px solid #ce3d6b;*/
+
+            max-height: 100%;
+            -webkit-box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 6px 15px 0px rgba(0, 0, 0, 0.15)
+        }
+
+        nav.nav-fixed .nav {
+            padding: 0.3em 0 0.2em;
+
+        }
+
+        .toggle-nav {
+            display: none;
+        }
+
+        .menu ul {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .menu ul li {
+            margin: 10px;
+        }
+
+        .menu li {
+            padding: 0.3em;
+            list-style: none;
+            display: inline-block;
+            /*position: relative;*/
+        }
+
+        .menu li:last-child {
+            padding-right: 0px;
+        }
+
+        .menu li a {
+            padding: 0.4em;
+            font-size: 0.9em;
+            display: block;
+            color: #2a2a2a;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .menu li .dropdown-menu {
+            background: #fff !important;
+            width: 100%;
+            padding: 30px 20px;
+            margin-top: 47px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 99;
+            border: 0px;
+            border-radius: 0px;
+        }
+
+        .menu-img {
+            width: 160px;
+            margin-left: 10px
+        }
+
+        .menu li .dropdown-menu.show {
+            margin-top: 16px;
+        }
+
+        .menu li .dropdown-menu li {
+            display: block;
+            border-bottom: 1px solid #dddddd
+        }
+
+        .menu li .dropdown-menu a {
+            display: block;
+            padding: 4px 0px;
+            color: #373736;
+            font-size: 0.9em;
+            font-weight: bold;
+            white-space: normal;
+        }
+
+        /*.menu li:hover .dropdown-menu{ display: block;}*/
+        .menu li a:hover,
+        .menu li a:hover i {
+            color: #016e31;
+            background: #f2f2f2
+        }
+
+        .menu li .dropdown-menu a:hover {
+            color: #024772;
+            background: transparent
+        }
+
+        .menu .dropdown-menu a>.link-p {
+            text-transform: capitalize;
+            font-weight: 400;
+            display: block
+        }
+
+        .menu li a.text-green {
+            color: #6AAC3C;
+        }
+
+        .menu li a.signbtn {
+            color: #ff6348;
+        }
+
+        .menu li:hover a.signbtn {
+            color: #ffffff;
+        }
+
+        .menu-dropdow-inner {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .green-bg {
+            background: #016e31;
+        }
+
+        .dropdown-menuwidth {
+            max-width: 900px;
+            margin: auto;
+        }
+
+
+
+        @media only screen and (max-width: 980px) {}
+
+        @media only screen and (max-width: 768px) {
+
+            .toggle-nav {
+                display: block;
+                position: absolute;
+                z-index: 99;
+                top: 23px;
+                right: -40px;
+                width: 30px;
+                height: 30px;
+                box-sizing: border-box;
+                outline: none;
+                border: none;
+
+            }
+
+            .toggle-nav span {
+                display: block;
+                width: 27px;
+                height: 3px;
+                background: #262626;
+                position: absolute;
+                top: 19px;
+                transition: 2ss;
+            }
+
+            .toggle-nav span:before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                transition: 2s;
+                background: #262626;
+            }
+
+            .toggle-nav span:after {
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                transition: 2s;
+                background: #262626;
+            }
+
+            .toggle-nav.toggle span {
+                background: transparent;
+            }
+
+            .toggle-nav.toggle span:before {
+                top: 0px;
+                transform: rotate(45deg);
+            }
+
+            .toggle-nav.toggle span:after {
+                top: 0px;
+                transform: rotate(-45deg);
+            }
+
+            .menu {
+                background: #ffffff;
+                height: 100%;
+                width: 250px;
+                left: -250px;
+                position: fixed;
+                top: 0px;
+                -webkit-transform: translateX(0);
+                transform: translateX(0);
+                -webkit-transition: .3s ease all;
+                transition: .3s ease all;
+                z-index: 999;
+                padding: 10px;
+
+            }
+
+            .menu ul {
+                margin: 0px;
+                padding: 10px;
+            }
+
+            .menu ul li ul {
+                margin: 0px;
+                padding: 0px 0;
+            }
+
+            .menu ul li ul>li {
+                padding: 0.4em 0;
+            }
+
+            .menu li a {
+                color: #000
+            }
+
+            .menu li {
+                display: block
+            }
+
+            .menu li .dropdown-menu {
+                margin-top: 11px
+            }
+
+            .open {
+                left: 0px;
+                -webkit-transform: translateX(0px);
+                transform: translateX(0px);
+            }
+
+            .menu li .dropdown-menu {
+                position: relative;
+
+            }
+
+            .menu .ml-3 {
+                margin-left: 0.4rem !important
+            }
+
+            .menu h3 {
+                font-size: 1.1rem
+            }
+
+            .menu-dropdow-inner {
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .menu li .dropdown-menu {
+                padding: 10px 0;
+            }
+
+            .menu-img {
+                display: none;
+            }
+
+            .menu li .dropdown-menu {
+                background: #f2f2f3 !important;
+
+            }
+
+            .menu li .dropdown-menu.show {
+                transform: translate3d(0px, 174px, 0px) !important;
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-header text-right">
+        <div class="container2">
+            <div class="d-md-flex flex-row d-sm-flex d-xl-flex justify-content-end align-items-center">
+
+                <div class="top-p-no link-1">
+                    <a href="tel:+19102619316"><i class="fa fa-phone">&nbsp;</i> <span>910.261.9316</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-bg">
+        <div class="container2">
+            <nav class="nav-section">
+                <div class="logo-wraper">
+                    <div class="logo">
+                        <a href="https://www.digitaldynamicswsi.com">
+                            <img src="https://www.digitaldynamicswsi.com/wp-content/uploads/2020/10/Global-WSI-logo.png"
+                                ;="">
+                        </a>
+                    </div>
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li class=""><a href="https://www.digitaldynamicswsi.com" class="">Home</a></li>
+                        <li>
+                            <a href="#" class="">ABOUT US <i class="fa fa-angle-down "></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-menuwidth">
+                                    <div class="menu-dropdow-inner">
+                                        <div class="ml-3">
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/about-us/">About Us
+                                                    <p class="link-p">
+                                                        We don’t believe in cookie cutter digital marketing strategies.
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/team/">Team
+                                                    <p class="link-p">Here are our fearless leaders. We can take you to
+                                                        them, if you want.</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3 mx-0">
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/awards/">Awards
+                                                    <p class="link-p">We hate to brag (okay, no, we don't), but we've
+                                                        won a
+                                                        lot of awards.</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/our-story/">Our Story
+                                                    <p class="link-p">We are the world’s largest digital marketing
+                                                        agency
+                                                        network.</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="menu-img">
+                                                <img
+                                                    src="https://www.digitaldynamicswsi.com/wp-content/themes/digitaldynamicswsi/assets/images/25-Years-Over-Seal-English.png">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="">SERVICES <i class="fa fa-angle-down "></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-menuwidth">
+                                    <div class="menu-dropdow-inner">
+                                        <div class="ml-3">
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/paid-search-advertising/">PAY
+                                                    PER CLICK
+                                                    <p class="link-p">Generate quality leads that are more likely to
+                                                        become
+                                                        your customers.</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/website-design-development/">website
+                                                    Design &amp; development
+                                                    <p class="link-p">Transform your website into a lead generation
+                                                        machine
+                                                        for your business.</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="wsi-text-button text-green"
+                                                    href="https://www.digitaldynamicswsi.com/our-services/">Discover our
+                                                    Digital Marketing Services<i class="fa fa-arrow-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/seo/">SEARCH ENGINE
+                                                    OPTIMIZATION
+                                                    <p class="link-p">Be found by your customers with a strategic and
+                                                        purposeful approach.</p>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/social-media-marketing/">SOCIAL
+                                                    MEDIA MARKETING
+                                                    <p class="link-p">Turn your customers into your brand loyalists and
+                                                        biggest fans.</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="ml-3">
+                                            <h3>In need of digital marketing services?</h3>
+                                            <small>Look no further, we can help!</small>
+                                            <a href="https://www.digitaldynamicswsi.com/contact-us/">LET’S TALK
+                                                MARKETING</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#" class="">CUSTOMER STORIES<i class="fa fa-angle-down "></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-menuwidth">
+                                    <div class="menu-dropdow-inner">
+                                        <!-- <div class="">
+                                                <div class="menu-img">
+                                                    <img src="https://www.digitaldynamicswsi.com/wp-content/themes/digitaldynamicswsi/assets/images/sunsweet-making-a-difference-featured.jpg"/>
+                                                </div>
+                                            </div> -->
+                                        <div class="ml-3">
+                                            <h3>Making a difference in our clients’ lives</h3>
+                                            <small>We positively impact the lives of our clients beyond their KPI
+                                                reports.</small>
+                                            <a href="https://www.digitaldynamicswsi.com/contact-us/">LEARN HOW</a>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div><a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/case-studies/">CASE STUDIES
+                                                    <p class="link-p">Have a look at some of our real-world client
+                                                        success
+                                                        stories.</p>
+                                                </a></div>
+                                            <div><a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/customer-testimonial/">TESTIMONIALS
+                                                    <p class="link-p">Check out what our happy clients have to say about
+                                                        working with us.</p>
+                                                </a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="https://www.digitaldynamicswsi.com/resources/">Resources<i
+                                    class="fa fa-angle-down"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-menuwidth">
+                                    <div class="menu-dropdow-inner">
+                                        <div class="ml-3">
+                                            <!--                                         <h3>Stay Updated On The Latest Digital Trends</h3> -->
+                                            <a href="https://www.digitaldynamicswsi.com/faqs/">FAQS
+                                            </a>
+                                            <p class="link-p"><a
+                                                    href="https://www.digitaldynamicswsi.com/faqs/">Questions
+                                                    asked. Questions answered.</a></p>
+                                            <a href="https://www.digitaldynamicswsi.com/brochure/">BROCHURE
+                                            </a>
+                                            <p class="link-p"><a
+                                                    href="https://www.digitaldynamicswsi.com/brochure/">Have a
+                                                    look at Free Business and Marketing Brochures.</a></p>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div><a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/infographic/">Infographic
+                                                    <p class="link-p">Checkout at some of our Inforgraphics to help you
+                                                        grow
+                                                        your business.</p>
+                                                </a></div>
+                                            <div><a class="dropdown-item"
+                                                    href="https://www.digitaldynamicswsi.com/videos/">Videos
+                                                    <p class="link-p">Learn more about digital marketing and why it is
+                                                        an
+                                                        important with our helpful videos.</p>
+                                                </a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class=""><a href="https://www.digitaldynamicswsi.com/contact-us/" class="">CONTACT US</a>
+                        </li>
+                        <li class=""><a href="https://www.digitaldynamicswsi.com/blog/" class="">BLOG</a></li>
+                    </ul>
+                    <a href="" class="toggle-nav menu_icon">
+                        <span></span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+</body>
+
+</html>
