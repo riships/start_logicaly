@@ -50,3 +50,12 @@ const users = [
 // console.log(iAmUserForLogIn.hasOwnProperty('isLoggedIn'));
 
 
+const course = {
+    courseName: 'JS in Hindi',
+    price: 1999,
+    courseInstructure: 'Rishi Soni'
+}
+const { courseName: name, price, courseInstructure: instructure } = course;
+console.log(instructure);
+
+
