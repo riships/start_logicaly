@@ -11,5 +11,9 @@ let val1;
 
 val1 = null ?? undefined;
 
-console.log(val1);
-// logical AND (&&) : returns the first falsy value or the last value if no falsy values are found
+// console.log(val1);
+
+
+// ternary operator
+const iceTeacPrice = 100;
+iceTeacPrice <= 80 ? console.log("less than 80") : console.log("more than 80");

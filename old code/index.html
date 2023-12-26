@@ -18,7 +18,7 @@
 
         #todoContainer {
             max-width: 100%;
-            min-height: 400px;
+            min-height: 200px;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -74,38 +74,26 @@
 </head>
 
 <body>
-    <!-- Input fields and Button container -->
     <div class="container main-container">
-        <div class="row mb-3 contener-style-new">
-            <div class="col-3" id="todoContainer">
-                <!-- Container to display the stored data -->
+        <div class="row mb-3">
+            <div class="col-6" id="todoContainer">
                 <div class="container" id="dataContainer">
+                    <!-- Container to display the stored data -->
                 </div>
             </div>
-            <div class="col-3" id="autoCol">
-                <!-- Input fields -->
+            <div class="col-6" id="autoCol">
                 <input class="new-text-style form-control" type="text" name="text" placeholder="Please Enter The Name">
                 <input class="new-text-style form-control" type="date" name="date" placeholder="Please Enter The time">
-                <!-- Button to store data -->
                 <button id="btnElab" class="btn btn-primary" type="button">Button</button>
-                <!-- Button to save changes during edit mode -->
                 <button id="btnSave" class="btn btn-success" type="button" style="display: none;">Save</button>
-                <!-- Button to cancel edit mode -->
                 <button id="btnCancel" class="btn btn-secondary" type="button" style="display: none;">Cancel</button>
                 <p id="paraAlrt" class="alert"></p>
             </div>
-
         </div>
     </div>
 
-
-
     <script>
-        // Array to store the data
-        let allData = [];
-        console.log(allData);
-
-        // Get references to the button and data container
+        // Get references to the elements
         const btnElab = document.getElementById('btnElab');
         const btnSave = document.getElementById('btnSave');
         const btnCancel = document.getElementById('btnCancel');
@@ -113,30 +101,39 @@
         const textInput = document.getElementsByName('text')[0];
         const dateInput = document.getElementsByName('date')[0];
         const paraAlert = document.getElementById('paraAlrt');
-        const colAuto = document.getElementById('autoCol');
-        let editIndex = -1;
+        const autoCol = document.getElementById('autoCol');
 
-        // Function to store data in the array
-        const storeData = () => {
+        // Array to store the data
+        let allData = [];
+
+        // Initialize data from local storage on page load
+        initializeData();
+
+        // Function to initialize data from local storage
+        function initializeData() {
+            const retrievedAllDataString = localStorage.getItem('allData');
+            allData = JSON.parse(retrievedAllDataString) || [];
+            displayData();
+        }
+
+        // Function to store data in local storage
+        function storeData() {
             const dataOfDate = dateInput.value;
             const dataOfText = textInput.value;
 
             // Check if input fields are empty
-            if (dataOfDate === '' || dataOfText === '') {
-                paraAlert.setAttribute('class', 'alert alert-danger');
-                paraAlert.setAttribute('role', 'alert');
-                paraAlert.textContent = 'Both input fields must be filled to store data.'
+            if (!dataOfDate || !dataOfText) {
+                displayAlert('Both input fields must be filled to store data.', 'alert-danger');
                 return;
             }
 
             // Check if the data already exists in the array
             const isDuplicate = allData.some(data => data.date === dataOfDate && data.text === dataOfText);
             if (isDuplicate) {
-                paraAlert.setAttribute('class', 'alert alert-warning');
-                paraAlert.setAttribute('role', 'alert');
-                paraAlert.textContent = 'Data already exists. Skipping storage.';
+                displayAlert('Data already exists. Skipping storage.', 'alert-warning');
             } else {
                 // Check if we are in edit mode
+                const editIndex = allData.findIndex(data => data.date === dataOfDate && data.text === dataOfText);
                 if (editIndex !== -1) {
                     // Update the existing data
                     allData[editIndex] = { date: dataOfDate, text: dataOfText };
@@ -151,61 +148,72 @@
                 textInput.value = '';
                 dateInput.value = '';
             }
-        };
+        }
 
         // Function to delete data from the array
-        const deleteData = index => {
+        function deleteData(index) {
             allData.splice(index, 1);
             // If we are in edit mode and deleting the current data, cancel edit mode
-            if (editIndex === index) {
+            if (index === editIndex) {
                 cancelEditMode();
             }
             // Display the updated data
             displayData();
-        };
+        }
 
         // Function to enter edit mode for data modification
-        const enterEditMode = index => {
+        function enterEditMode(index) {
             editIndex = index;
             textInput.value = allData[index].text;
             dateInput.value = allData[index].date;
             btnElab.style.display = 'none';
             btnSave.style.display = 'inline';
             btnCancel.style.display = 'inline';
-        };
+        }
 
         // Function to cancel edit mode without saving changes
-        const cancelEditMode = () => {
+        function cancelEditMode() {
             editIndex = -1;
             textInput.value = '';
             dateInput.value = '';
             btnElab.style.display = 'inline';
             btnSave.style.display = 'none';
             btnCancel.style.display = 'none';
-        };
+        }
 
         // Function to display the stored data on the page
-        const displayData = () => {
+        function displayData() {
             dataContainer.innerHTML = allData.map((data, index) => `
-                <div class="div-slected">
+                <div class="div-selected">
                     <p>${data.text}</p>
                     <p>${data.date}</p>
                     <div class="btn-style">
-                    <button class="btn btn-primary" onclick="enterEditMode(${index})">Edit</button>
-                    <button class="btn btn-danger" onclick="deleteData(${index})">Delete</button>
+                        <button class="btn btn-primary" onclick="enterEditMode(${index})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteData(${index})">Delete</button>
                     </div>
                 </div>
             `).join('');
-        };
+
+            // Update local storage with the latest data
+            localStorage.setItem('allData', JSON.stringify(allData));
+        }
+
+        // Function to display an alert message
+        function displayAlert(message, alertClass) {
+            paraAlert.textContent = message;
+            paraAlert.className = `alert ${alertClass}`;
+            paraAlert.style.display = 'block';
+
+            // Hide the alert after a few seconds
+            setTimeout(() => {
+                paraAlert.style.display = 'none';
+            }, 3000);
+        }
 
         // Add event listeners
         btnElab.addEventListener('click', storeData);
         btnSave.addEventListener('click', storeData);
         btnCancel.addEventListener('click', cancelEditMode);
-
-        // Display any existing stored data on page load
-        colAuto.appendChild(paraAlert);
-        displayData();
     </script>
 </body>
 
