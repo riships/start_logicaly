@@ -17,3 +17,33 @@ for (const val of myString) {
 }
 
 // Map in this 
+
+const myMap = new Map();
+myMap.set('INR', 'Rishi')
+myMap.set('Russia', 'Jack')
+myMap.set('AFR', 'Doni')
+
+
+// console.log(myMap);
+// map with array 
+for (const [key, val] of myMap) {
+    // console.log(key + ' => ' + val);
+}
+
+
+// map with object
+
+
+const myObj = {
+    'name': 'rishi',
+    'age': 26,
+    'country': 'USA',
+    'mailId': 'rishisoni@gmail.com'
+}
+
+for (const val of myObj) {
+    // console.log(val);
+}
+// its not working with map
+// this is not the right method to iterate object with map
+
