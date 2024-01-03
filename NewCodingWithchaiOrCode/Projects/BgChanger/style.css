@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+}
+
+.allChild {
+    min-height: 200px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    height: 100px;
+    width: 100px;
+}
+
+#red {
+    background-color: red;
+}
+
+#blue {
+    background-color: blue;
+}
+
+#yellow {
+    background-color: yellow;
+}
+
+#orange {
+    background-color: orange;
+}
+
+#black {
+    background-color: black;
+}
