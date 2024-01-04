@@ -17,6 +17,22 @@ form {
 label {
     display: block;
     margin-bottom: 8px;
+    text-align: left;
+}
+
+.warning-height,
+.warning-weight {
+    height: 25px;
+    text-align: left;
+    color: red;
+}
+
+.warning-height {
+    display: none;
+}
+
+.warning-weight {
+    display: none;
 }
 
 input {
