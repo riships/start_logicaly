@@ -13,12 +13,16 @@
         <label for="height">Height (cm):</label>
         <input type="text" id="height" name="height" required>
         <div class="warning-height"></div>
-
         <label for="weight">Weight (kg):</label>
         <input type="text" id="weight" name="weight" required>
         <div class="warning-weight"></div>
-
+        <div class="result"></div>
         <button type="submit">Calculate</button>
+
+        <p><b>Underweight:</b> BMI less than 18.5</p>
+        <p><b>Normal Weight:</b> BMI between 18.5 and 24.9</p>
+        <p><b>Overweight:</b> BMI between 25 and 29.9</p>
+        <p><b>Obesity:</b> BMI of 30 or greater</p>
     </form>
     <script src="script.js"></script>
 </body>

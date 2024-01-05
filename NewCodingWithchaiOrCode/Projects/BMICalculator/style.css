@@ -18,6 +18,7 @@ label {
     display: block;
     margin-bottom: 8px;
     text-align: left;
+    font-size: 14px;
 }
 
 .warning-height,
@@ -38,7 +39,7 @@ label {
 input {
     width: 100%;
     padding: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     box-sizing: border-box;
 }
 
@@ -53,4 +54,42 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+p {
+    font-size: 12.5px;
+    text-align: left;
+}
+
+.result {
+    min-height: 30px;
+    vertical-align: middle;
+    font-size: 12.5px;
+    margin: 10px 0;
+    display: none;
+}
+
+.underweight-color {
+    color: blue;
+    display: block;
+}
+
+.normal-weight-color {
+    color: green;
+    display: block;
+}
+
+.overweight-color {
+    color: orange;
+    display: block;
+}
+
+.obese-color {
+    color: red;
+    display: block;
+}
+
+.invalid-color {
+    color: gray;
+    display: block;
 }
