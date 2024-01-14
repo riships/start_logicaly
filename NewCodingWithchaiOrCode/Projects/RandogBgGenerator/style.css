@@ -1,0 +1,20 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font: 12pt "Tahoma";
+    /* Initial background color */
+}
+
+.container {
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}

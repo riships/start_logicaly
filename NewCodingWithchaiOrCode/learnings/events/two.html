@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dome-html</title>
+    <title>demo-html</title>
 </head>
 
 <body>
@@ -14,9 +14,18 @@
 
 </body>
 <script>
-    setInterval(function () {
-        // console.log("Rishi", Date.now());
-    }, 1000);
+    let timeId;
+    
+    document.querySelector('#start').addEventListener('click',()=>{
+        let sayDat = function (str) {
+            console.log(str, Date.now());
+        }
+       timeId = setInterval(sayDat, 1000, 'Hello this is me Rishi')
+    })
+
+    document.querySelector('#stop').addEventListener('click', () => {
+        clearInterval(timeId);
+    });
 </script>
 
 </html>
