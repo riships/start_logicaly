@@ -1,12 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>key-Check</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
+    <div align="center" style="margin-top: 30px;">
+        <table id="insert" border="1" cellpadding="0" width="20%" cellspacing="0" bordercolor="#000000">
+            <thead>
+                <tr>
+                    <th width="33%">Key Name</th>
+                    <th width="33%">key Code</th>
+                    <th>Ke</th>
+                </tr>
+            </thead>
+            <tbody id="insert-body">
+
+            </tbody>
+        </table>
+    </div>
 </body>
+<script>
+    let insertBody = document.getElementById('insert-body');
+
+    window.addEventListener('keyup', (element) => {
+        console.log(element);
+        insertBody.innerHTML += `
+        <tbody>
+            <tr>
+                <td align="center">${element.code}</td>
+                <td align="center">${element.key}</td>
+                <td align="center">${element.keyCode}</td>
+            </tr>
+        <tbody>
+        `
+    })
+</script>
+
 </html>
