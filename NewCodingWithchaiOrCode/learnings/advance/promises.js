@@ -93,3 +93,7 @@ async function getAllUsers() {
     }
 }
 getAllUsers()
+
+
+// now using this link we will get the data
+// http://jsonplaceholder.typicode.com/users
